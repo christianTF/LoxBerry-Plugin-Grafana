@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Uninstall Grafana
+apt-get remove grafana
+apt-get remove grafana-data
+apt-get remove grafana-zabbix
+
+
