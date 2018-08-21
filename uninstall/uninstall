@@ -1,6 +1,10 @@
 #!/bin/bash
 
+systemctl disable grafana-server
+systemctl stop grafana-server
+
+
 # Uninstall Grafana
-apt-get -y remove grafana
+apt-get -y purge grafana
 
 

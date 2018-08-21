@@ -22,7 +22,7 @@ systemctl enable grafana-server
 /usr/sbin/grafana-cli plugins install grafana-simple-json-datasource
 
 # Provisioning Stats4Lox (SimpleJson) datasource
-cp -f REPLACELBPDATADIR/provisioning/* /etc/grafana/provisioning/datasources/
+cp -f REPLACELBPCONFIGDIR/provisioning/* /etc/grafana/provisioning/datasources/
 
 # Grafana starten/restarten
 systemctl restart grafana-server
