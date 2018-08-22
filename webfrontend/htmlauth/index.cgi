@@ -9,7 +9,7 @@ my $hostname = LoxBerry::System::lbhostname();
 print <<EOF;
 <center>
 
-<a href="http://$hostname:3000/">Open Grafana Webinterface</a>
+<a href="http://$hostname:3000/" target="grafana">Open Grafana Webinterface</a>
 
 </center>
 
