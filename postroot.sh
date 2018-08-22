@@ -1,12 +1,18 @@
 #!/bin/bash
 # Will be executed as user "root".
 
-mkdir REPLACELBPDATADIR/download
+DOWNLOADDIR=REPLACELBPDATADIR/download
+
+mkdir $DOWNLOADDIR
+chown loxberry:loxberry $DOWNLOADDIR
+rm -f $DOWNLOADDIR/*
 
 # Downloading Grafana
-wget -P REPLACELBPDATADIR/download https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.2.2_armhf.deb 
+wget -P $DOWNLOADDIR https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.2.2_armhf.deb 
+chown -f loxberry:loxberry $DOWNLOADDIR/* 
+
 # Installing
-dpkg -i REPLACELBPDATADIR/download/grafana_5.2.2_armhf.deb
+dpkg -i $DOWNLOADDIR/grafana_5.2.2_armhf.deb
 
 if [ $? -ne 0 ]
 then
@@ -22,7 +28,7 @@ systemctl enable grafana-server
 /usr/sbin/grafana-cli plugins install grafana-simple-json-datasource
 
 # Provisioning Stats4Lox (SimpleJson) datasource
-cp -f REPLACELBPCONFIGDIR/provisioning/* /etc/grafana/provisioning/datasources/
+cp -f REPLACELBPCONFIGDIR/provisioning/datasources/* /etc/grafana/provisioning/datasources/
 
 # Grafana starten/restarten
 systemctl restart grafana-server
