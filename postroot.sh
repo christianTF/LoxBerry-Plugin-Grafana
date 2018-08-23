@@ -40,11 +40,10 @@ fi
 cp -f $LBPDATADIR/shipment/provisioning/datasources/* /etc/grafana/provisioning/datasources/
 
 # chown
-#chown -R loxberry:loxberry $LBPCONFIGDIR
-#chmod -R 775 $LBPCONFIGDIR
+chown -R loxberry:loxberry $LBPCONFIGDIR
+chmod -R 775 $LBPCONFIGDIR
 
-useradd -g loxberry grafana
-
+usermod -a -G loxberry grafana
 
 # Grafana starten/restarten
 systemctl restart grafana-server
