@@ -27,11 +27,11 @@ fi
 systemctl daemon-reload
 systemctl enable grafana-server
 
-if [ ! -L "/etc/grafana" ] ; then
-	mv /etc/grafana /etc/grafana.orig
-	cp -R /etc/grafana.orig/* $LBPCONFIGDIR/
-	ln -s $LBPCONFIGDIR /etc/grafana
-fi
+# if [ ! -L "/etc/grafana" ] ; then
+	# mv /etc/grafana /etc/grafana.orig
+	# cp -R /etc/grafana.orig/* $LBPCONFIGDIR/
+	# ln -s $LBPCONFIGDIR /etc/grafana
+# fi
 
 # Install Grafana Simple-JSON Plugin
 /usr/sbin/grafana-cli plugins install grafana-simple-json-datasource
@@ -39,9 +39,9 @@ fi
 # Provisioning Stats4Lox (SimpleJson) datasource
 cp -f $LBPDATADIR/shipment/provisioning/datasources/* /etc/grafana/provisioning/datasources/
 
-# chown
-chown -R loxberry:loxberry $LBPCONFIGDIR
-chmod -R 775 $LBPCONFIGDIR
+# # chown
+# chown -R loxberry:loxberry $LBPCONFIGDIR
+# chmod -R 775 $LBPCONFIGDIR
 
 usermod -a -G loxberry grafana
 
