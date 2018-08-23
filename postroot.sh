@@ -29,7 +29,7 @@ systemctl enable grafana-server
 
 if [ ! -L "/etc/grafana" ] ; then
 	mv /etc/grafana /etc/grafana.orig
-	cp -R /etc/grafana.orig $LBPCONFIGDIR/
+	cp -R /etc/grafana.orig/* $LBPCONFIGDIR/
 	ln -s $LBPCONFIGDIR /etc/grafana
 fi
 
