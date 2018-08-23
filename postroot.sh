@@ -1,7 +1,10 @@
 #!/bin/bash
 # Will be executed as user "root".
 
-DOWNLOADDIR=REPLACELBPDATADIR/download
+LBPCONFIGDIR=REPLACELBPCONFIGDIR
+LBPDATADIR=REPLACELBPDATADIR
+
+DOWNLOADDIR=$LBPDATADIR/download
 
 mkdir $DOWNLOADDIR
 chown loxberry:loxberry $DOWNLOADDIR
@@ -24,11 +27,20 @@ fi
 systemctl daemon-reload
 systemctl enable grafana-server
 
+if [ ! -L "/etc/grafana" ] ; then
+	mv /etc/grafana /etc/grafana.orig
+	cp -R /etc/grafana.orig $LBPCONFIGDIR/
+	ln -s $LBPCONFIGDIR /etc/grafana
+fi
+
 # Install Grafana Simple-JSON Plugin
 /usr/sbin/grafana-cli plugins install grafana-simple-json-datasource
 
 # Provisioning Stats4Lox (SimpleJson) datasource
-cp -f REPLACELBPCONFIGDIR/provisioning/datasources/* /etc/grafana/provisioning/datasources/
+cp -f $LBPDATADIR/shipment/provisioning/datasources/* /etc/grafana/provisioning/datasources/
+
+# chown
+chown -R loxberry:loxberry $LBPCONFIGDIR
 
 # Grafana starten/restarten
 systemctl restart grafana-server
