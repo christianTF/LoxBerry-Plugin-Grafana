@@ -37,7 +37,8 @@ systemctl enable grafana-server
 /usr/sbin/grafana-cli plugins install grafana-simple-json-datasource
 
 # Provisioning Stats4Lox (SimpleJson) datasource
-cp -f $LBPDATADIR/shipment/provisioning/datasources/* /etc/grafana/provisioning/datasources/
+cp -r -f $LBPDATADIR/shipment/provisioning/* /etc/grafana/provisioning/
+chown -R grafana:grafana /etc/grafana/provisioning/
 
 # # chown
 # chown -R loxberry:loxberry $LBPCONFIGDIR
