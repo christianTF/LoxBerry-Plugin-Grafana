@@ -1,0 +1,32 @@
+#!/bin/bash
+# Will be executed as user "root".
+
+# Replace-Variables
+PLUGINNAME=REPLACELBPPLUGINDIR
+LBPCONFIGDIR=REPLACELBPCONFIGDIR
+LBPHTMLAUTHDIR=REPLACELBPHTMLAUTHDIR
+LBPLOGDIR=REPLACELBPLOGDIR
+
+# Source logging library and iniparser
+. $LBHOMEDIR/libs/bashlib/loxberry_log.sh
+. $LBHOMEDIR/libs/bashlib/iniparser.sh
+
+PACKAGE=$PLUGINNAME
+NAME=Daemon
+FILENAME=$LBPLOGDIR/daemon.log
+LOGLEVEL=7
+
+LOGSTART "DAEMON Script from Grafana Plugin"
+
+# Grafana Integration
+iniparser $LBPCONFIGDIR/stats4lox.cfg "GRAFANA"
+GRAFANAenablerrdserver="${GRAFANAenablerrdserver^^}"
+LOGINF "Grafana Integration enabled: $GRAFANAenablerrdserver"
+if [ "$GRAFANAenablerrdserver" == "TRUE" ] || [ "$GRAFANAenablerrdserver" == "1" ] ; then
+	LOGINF "Starting Grafana Integration on port GRAFANArrdserverport"
+	su loxberry -c "$LBPHTMLAUTHDIR/ajax/ajax-settings.cgi action=start key=GRAFANA.enablerrdserver"
+fi
+
+LOGEND "Daemon finished"
+# Finished
+exit 0
