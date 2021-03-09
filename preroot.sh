@@ -10,5 +10,7 @@ echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee /etc/apt/
 echo "<INFO> Adding/Updating repository key to apt..."
 wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
 
+echo "<INFO> Updating apt database..."
+apt-get -q -y --allow-unauthenticated --allow-downgrades --allow-remove-essential --allow-change-held-packages update
 
 exit 0
